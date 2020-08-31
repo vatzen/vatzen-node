@@ -1,20 +1,17 @@
-class VatZen {
-  constructor(private apiKey: string) {}
+import ApiClient from './api-client';
 
-  /**
-   * Returns currently user API Key
-   */
-  getApiKey(): string {
-    return this.apiKey;
-  }
+import Rates from './rates';
 
-  /**
-   * Sets the new valie for API Key
-   * @param newApiKey New value for the API Key
-   */
-  setApiKey(newApiKey: string): void {
-    this.apiKey = newApiKey;
-  }
+interface VatZenOptions {
+  apiKey: string;
 }
 
-export default VatZen;
+class VatZen {
+  private apiClient = new ApiClient();
+
+  public rates = new Rates(this.apiClient);
+
+  constructor(private options: VatZenOptions) {
+    this.apiClient.init(this.options.apiKey);
+  }
+}
