@@ -1,0 +1,21 @@
+{
+  "name": "vatzen-node",
+  "version": "1.0.0-rc1",
+  "description": "NPM Module for VatZen API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vatzen/vatzen-node.git"
+  },
+  "keywords": [],
+  "author": "vatzen",
+  "license": "MIT"
+}
