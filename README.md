@@ -100,3 +100,26 @@ try {
   // find will throw an error if something went wrong
 }
 ```
+
+## VAT Number Validation
+
+Before using the endpoint, you can familiarize yourself with our [Validations endpoint documentation](https://documentation.vatzen.com/api/validate-vat-number).
+
+All the rates function are available inside `VatZen` objec inside `validations` parameter. For example `vatzen.validations.validate`.
+
+### Validate VAT Number
+
+VAT number validation is implemented inside `validate` function, which accepts only 1 parameter - vat number string. As the response, it returns the complete `Validations` entity.
+
+Example:
+
+```typescript
+try {
+  const validationResult = await vatzen.validations.validate('LU123455');
+  if (validationResult.valid) {
+    console.log('Validated company: ': validationResult.company.name);
+  }
+} catch (e: ErrorEntity) {
+  // valid will throw an error if something went wrong, for example vat rate not found
+}
+```

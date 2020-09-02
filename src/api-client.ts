@@ -50,6 +50,26 @@ class ApiClient {
       },
     );
   }
+
+  post(
+    path: string,
+    queryParams?: { [key: string]: string | number | boolean | undefined },
+    body?: { [key: string]: string | number | boolean | undefined },
+  ) {
+    return fetch(
+      `${config.apiEnpoint}/${path}${
+        queryParams ? this.objectToQuery(queryParams) : ''
+      }`,
+      {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'x-api-key': this.apiKey,
+        },
+        body: JSON.stringify(body || {}),
+      },
+    );
+  }
 }
 
 export default ApiClient;
