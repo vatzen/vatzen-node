@@ -1,8 +1,11 @@
 import ApiClient from './api-client';
 import { PaginationEntity, RateEntity, ErrorEntity } from './api-interfaces';
+import { Endpoint } from './endpoint';
 
-class Rates {
-  constructor(private apiClient: ApiClient) {}
+class Rates extends Endpoint {
+  constructor(private apiClient: ApiClient) {
+    super();
+  }
 
   async getAll(options?: {
     limit?: number;
@@ -18,23 +21,13 @@ class Rates {
       member_state: options?.memberState,
     });
 
-    const responseJson = await apiResponse.json();
-    if (apiResponse.status === 200) {
-      return responseJson;
-    } else {
-      throw responseJson;
-    }
+    return this.formatResponse(apiResponse);
   }
 
   async getByCountryCode(countryCode: string): Promise<RateEntity> {
     const apiResponse = await this.apiClient.get(`rate/${countryCode}`);
 
-    const responseJson = await apiResponse.json();
-    if (apiResponse.status === 200) {
-      return responseJson;
-    } else {
-      throw responseJson;
-    }
+    return this.formatResponse(apiResponse);
   }
 
   async find(options: {
@@ -50,12 +43,7 @@ class Rates {
       use_client_ip: options.useClientIp,
     });
 
-    const responseJson = await apiResponse.json();
-    if (apiResponse.status === 200) {
-      return responseJson;
-    } else {
-      throw responseJson;
-    }
+    return this.formatResponse(apiResponse);
   }
 }
 

@@ -4,9 +4,12 @@ import {
   ErrorEntity,
   ValidationEntity,
 } from './api-interfaces';
+import { Endpoint } from './endpoint';
 
-class Validations {
-  constructor(private apiClient: ApiClient) {}
+class Validations extends Endpoint {
+  constructor(private apiClient: ApiClient) {
+    super();
+  }
 
   async validate(vatNumber: string): Promise<ValidationEntity> {
     const apiResponse = await this.apiClient.get(`validate/${vatNumber}`);
@@ -41,15 +44,6 @@ class Validations {
     });
 
     return this.formatResponse(apiResponse);
-  }
-
-  private async formatResponse(apiResponse: Response) {
-    const responseJson = await apiResponse.json();
-    if (apiResponse.status === 200) {
-      return responseJson;
-    } else {
-      throw responseJson;
-    }
   }
 }
 

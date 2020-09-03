@@ -39,11 +39,75 @@ vatzenClient.rates
 
 VatZen NPM module is TS-first and have a complete type-coverege, which is supported out-of-the-box.
 
+### General TypeScript Entities
+
+```typescript
+// Available VAT Categories
+enum VatCategory {
+  'audiobook' = 'audiobook',
+  'broadcasting' = 'broadcasting',
+  'ebook' = 'ebook',
+  'eperiodical' = 'eperiodical',
+  'eservice' = 'eservice',
+  'telecommunication' = 'telecommunication',
+}
+
+// Interface which describes country
+interface CountryEntity {
+  code: string;
+  name: string;
+  local_name: string;
+  member_state: boolean;
+}
+
+// Pagination information
+interface PaginationEntity {
+  total: number;
+  has_more: boolean;
+}
+
+// Available error types
+enum ErrorTypes {
+  missing_api_key = 'missing_api_key',
+  invalid_api_key = 'invalid_api_key',
+  usage_limit_reached = 'usage_limit_reached',
+  invalid_input = 'invalid_input',
+  invalid_ip_address = 'invalid_ip_address',
+  could_not_resolve_ip = 'could_not_resolve_ip',
+  invalid_country_code = 'invalid_country_code',
+  invalid_amount = 'invalid_amount',
+}
+
+// Error returned fomr the server
+export interface ErrorEntity {
+  statusCode: number;
+  success: false;
+  error: {
+    code: number;
+    type: ErrorTypes;
+    message: string;
+  };
+}
+```
+
 ## Rates
 
 Before using the endpoint, you can familiarize yourself with our [Rates endpoint documentation](https://documentation.vatzen.com/api/vat-rates).
 
 All the rates function are available inside `VatZen` objec inside `rates` parameter. For example `vatzen.rates.find`.
+
+### Rate TypeScript Entity
+
+```typescript
+interface RateEntity {
+  standart_rate: number;
+  currency: string;
+  country: CountryEntity;
+  categories: {
+    [categoryName in VatCategory]: number | undefined;
+  };
+}
+```
 
 ### All Rates
 
@@ -66,6 +130,15 @@ try {
 }
 ```
 
+Returns:
+
+```typescript
+interface GetAllRatesResponse {
+  pagination: PaginationEntity;
+  rates: RateEntity[];
+}
+```
+
 ### Rate by Country Code
 
 If you want to obtain the rate by known ISO Country Code, you can use `rates.getByCountryCode` function, which accepts country code string as a parameter. For example:
@@ -78,6 +151,8 @@ try {
   // getByCountryCode will throw an error if something went wrong
 }
 ```
+
+Returns `RateEntity`.
 
 ### Find Rate
 
@@ -101,11 +176,37 @@ try {
 }
 ```
 
+Returns `RateEntity`.
+
 ## VAT Number Validation
 
 Before using the endpoint, you can familiarize yourself with our [Validations endpoint documentation](https://documentation.vatzen.com/api/validate-vat-number).
 
 All the rates function are available inside `VatZen` objec inside `validations` parameter. For example `vatzen.validations.validate`.
+
+### Validation TypeScript Entity
+
+```typescript
+export interface ValidationEntity {
+  id?: string;
+  consultation_number?: string;
+  requested: string;
+  created: string;
+  valid: boolean | null;
+  query: string;
+  country: CountryEntity;
+  company: null | {
+    name: string | null;
+    address: string | null;
+  };
+  pending: boolean;
+  valid_format: boolean;
+  requester: null | {
+    country_code: string;
+    vat_number: string;
+  };
+}
+```
 
 ### Validate VAT Number
 
@@ -119,7 +220,55 @@ try {
   if (validationResult.valid) {
     console.log('Validated company: ': validationResult.company.name);
   }
-} catch (e: ErrorEntity) {
-  // valid will throw an error if something went wrong, for example vat rate not found
+} catch (e: ErrorEntity) {}
+```
+
+Returns `ValidationEntity`.
+
+### Create Validation
+
+If you want to validate VAT number and store the validation, you can use `createValidation` function, which accepts VAT number as a parameter and returns VAT Entity.
+
+Example:
+
+```typescript
+try {
+  const validationResult = await vatzen.validations.createValidation('LU123455');
+  if (validationResult.valid) {
+    console.log('Validated company: ': validationResult.company.name);
+  }
+} catch (e: ErrorEntity) {}
+```
+
+Returns `ValidationEntity`.
+
+### Get validation by id
+
+Returns stored validation object by id. Implemented in `getValidationById` function.
+
+```typescript
+try {
+  const validation = await vatzen.validations.getValidationById('dgy13wjbhbj342');
+  console.log('Fetched Validation:': validation);
+} catch (e: ErrorEntity) {}
+```
+
+Returns `ValidationEntity`.
+
+### Get all validation
+
+If you want to fetch all validations, you can use `getAll` function, which accepts optional options object with the following optional parameters:
+
+| key           | type      | description                                     |
+|---------------|-----------|-------------------------------------------------|
+| `limit`       | `number`  | Limit for pagination                            |
+| `page`        | `number`  | Page number, starting from 1                    |
+
+Returns:
+
+```typescript
+interface GetAllValidationsResponse {
+  pagination: PaginationEntity;
+  validations: ValidationEntity[];
 }
 ```
