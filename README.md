@@ -272,3 +272,105 @@ interface GetAllValidationsResponse {
   validations: ValidationEntity[];
 }
 ```
+
+## Prices Calculations
+
+VAT prices calculations are implemented inside `prices` module in vatzen client, which you can access via `vatzen.prices`. Before using this endpoint, make sure to read our [Official Prices Documentation](https://documentation.vatzen.com/api/calculate-price).
+
+### Price TypeScript Entity
+
+```typescript
+export interface PriceEntity {
+  id?: string;
+  amount: {
+    total_incl_vat: 0;
+    total_excl_vat: 0;
+    vat_amount: 0;
+  };
+  category: VatCategory;
+  vat_rate: 0;
+  country: CountryEntity;
+  requested: PriceCalculationRequest;
+  success: true;
+}
+
+```
+
+### Calculate Price
+
+Implemented via `vatzen.prices.calculate` function. Using this function, you can perform price calculation based on different parameters. If accepts options object, with 1 required fields: amount, and various option fields, which will be used to identify VAT rate.
+
+| key           | type      | description                                                          |
+|---------------|-----------|----------------------------------------------------------------------|
+| `amount`      | `number`  | Amount for VAT calculation in cents                                  |
+| `vatIncluded` | `boolean` | Identifies if VAT already included in amount                         |
+| `category`    | `VatCategory`  | VAT Category used for price calculations                        |
+| `countryCode` | `string`  | 2 characters ISO country code                                        |
+| `countryName` | `string`  | Country name, for example `Germany`                                  |
+| `ipAddress`   | `string`  | IP Address of your client which will be used to identify the country |
+| `useClientIp` | `boolean` | If set to true, VatZen will extract ip address from the request      |
+
+Example:
+
+```typescript
+const calculatePriceForGermany = await vatzenClient.prices.calculate({
+  amount: 10000,
+  countryCode: 'DE',
+  category: VatCategory.audiobook,
+});
+console.log(
+  '100 EUR with VAT for AudioBooks in Germany: ',
+  Math.round(calculatePriceForGermany.amount.total_incl_vat / 100),
+);
+```
+
+Returns `PriceEntity`.
+
+### Create Price Calculation
+
+If you want to calculate price and store the calculation, you can use `createPriceCalculation` function, which accepts the same parameters as `calculate` function.
+
+Example:
+
+```typescript
+const createdPriceForSpain = await vatzenClient.prices.createPriceCalculation(
+  {
+    amount: 10000,
+    countryCode: 'ES',
+  },
+);
+console.log('Created price ID: ', createdPriceForSpain.id);
+```
+
+Returns `PriceEntity`.
+
+### Get Price Calculation by id
+
+Returns stored price calculation object by id. Implemented in `getPriceCalculationById` function.
+
+```typescript
+const retrievedPrice = await vatzenClient.prices.getPriceCalculationById(
+  createdPriceForSpain.id,
+);
+console.log('Retrieved price: ', retrievedPrice);
+```
+
+Returns `PriceEntity`.
+
+### Get all price calculations
+
+If you want to fetch all calculations you performed, you can use `getAll` function, which accepts optional options object with the following optional parameters:
+
+| key           | type      | description                                     |
+|---------------|-----------|-------------------------------------------------|
+| `limit`       | `number`  | Limit for pagination                            |
+| `page`        | `number`  | Page number, starting from 1                    |
+
+Returns:
+
+```typescript
+interface GetAllPriceCalculationsResponse {
+  pagination: PaginationEntity;
+  validations: PriceEntity[];
+}
+```

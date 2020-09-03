@@ -1,4 +1,4 @@
-import VatZen from '../src/index';
+import VatZen, { VatCategory } from '../src/index';
 
 const vatzenClient = new VatZen({
   apiKey: 'YOUR_API_KEY',
@@ -40,10 +40,41 @@ async function testValidationsEndpoints() {
   console.log('All Validations: ', allMyValidations);
 }
 
+async function testPricesEndpoints() {
+  const calculatePriceForGermany = await vatzenClient.prices.calculate({
+    amount: 10000,
+    countryCode: 'DE',
+    category: VatCategory.audiobook,
+  });
+  console.log(
+    '100 EUR with VAT for AudioBooks in Germany: ',
+    Math.round(calculatePriceForGermany.amount.total_incl_vat / 100),
+  );
+
+  const createdPriceForSpain = await vatzenClient.prices.createPriceCalculation(
+    {
+      amount: 10000,
+      countryCode: 'ES',
+    },
+  );
+  console.log('Created price ID: ', createdPriceForSpain.id);
+
+  if (createdPriceForSpain.id) {
+    const retrievedPrice = await vatzenClient.prices.getPriceCalculationById(
+      createdPriceForSpain.id,
+    );
+    console.log('Retrieved price: ', retrievedPrice);
+  }
+
+  const allMyPrices = await vatzenClient.prices.getAll();
+  console.log('All Prices: ', allMyPrices);
+}
+
 async function runExample() {
   try {
     await testRatesEndpoints();
     await testValidationsEndpoints();
+    await testPricesEndpoints();
   } catch (e) {
     console.log('Something went wrong: ', e?.error?.message || 'Unknown error');
   }

@@ -1,9 +1,5 @@
 import ApiClient from './api-client';
-import {
-  PaginationEntity,
-  ErrorEntity,
-  ValidationEntity,
-} from './api-interfaces';
+import { PaginationEntity, ValidationEntity } from './api-interfaces';
 import { Endpoint } from './endpoint';
 
 class Validations extends Endpoint {
