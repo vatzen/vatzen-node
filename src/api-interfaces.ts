@@ -68,3 +68,21 @@ export interface ValidationEntity {
     vat_number: string;
   };
 }
+
+export interface PriceCalculationRequest {
+  amount: number;
+  vat_included: boolean;
+}
+export interface PriceEntity {
+  id?: string;
+  amount: {
+    total_incl_vat: 0;
+    total_excl_vat: 0;
+    vat_amount: 0;
+  };
+  category: VatCategory;
+  vat_rate: 0;
+  country: CountryEntity;
+  requested: PriceCalculationRequest;
+  success: true;
+}
