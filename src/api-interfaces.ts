@@ -48,3 +48,23 @@ export interface ErrorEntity {
     message: string;
   };
 }
+
+export interface ValidationEntity {
+  id?: string;
+  consultation_number?: string;
+  requested: string;
+  created: string;
+  valid: boolean | null;
+  query: string;
+  country: CountryEntity;
+  company: null | {
+    name: string | null;
+    address: string | null;
+  };
+  pending: boolean;
+  valid_format: boolean;
+  requester: null | {
+    country_code: string;
+    vat_number: string;
+  };
+}
