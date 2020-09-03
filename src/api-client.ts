@@ -66,7 +66,6 @@ class ApiClient {
           accept: 'application/json',
           'x-api-key': this.apiKey,
         },
-        body: JSON.stringify(body || {}),
       },
     );
   }

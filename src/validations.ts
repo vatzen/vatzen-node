@@ -18,7 +18,7 @@ class Validations extends Endpoint {
   }
 
   async createValidation(vatNumber: string): Promise<ValidationEntity> {
-    const apiResponse = await this.apiClient.post(`validations`, undefined, {
+    const apiResponse = await this.apiClient.post(`validations`, {
       vat_number: vatNumber,
     });
 

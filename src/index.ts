@@ -17,3 +17,5 @@ class VatZen {
     this.apiClient.init(this.options.apiKey);
   }
 }
+
+export default VatZen;
