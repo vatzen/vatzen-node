@@ -1,5 +1,5 @@
-import ApiClient from './api-client';
-import { PaginationEntity, ValidationEntity } from './api-interfaces';
+import ApiClient from '../api/api-client';
+import { PaginationEntity, ValidationEntity } from '../api/api-interfaces';
 import { Endpoint } from './endpoint';
 
 class Validations extends Endpoint {

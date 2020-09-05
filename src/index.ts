@@ -1,10 +1,10 @@
-import ApiClient from './api-client';
+import ApiClient from './api/api-client';
 
-import Rates from './rates';
-import Validations from './validations';
-import Prices from './prices';
+import Rates from './endpoints/rates';
+import Validations from './endpoints/validations';
+import Prices from './endpoints/prices';
 
-export { VatCategory } from './api-interfaces';
+export { VatCategory } from './api/api-interfaces';
 
 interface VatZenOptions {
   apiKey: string;

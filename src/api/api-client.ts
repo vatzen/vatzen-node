@@ -1,7 +1,7 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-import config from './config';
+import config from '../config';
 
 class ApiClient {
   apiKey: string;
@@ -38,7 +38,7 @@ class ApiClient {
     queryParams?: { [key: string]: string | number | boolean | undefined },
   ) {
     return fetch(
-      `${config.apiEnpoint}/${path}${
+      `${config.apiEndpoint}/${path}${
         queryParams ? this.objectToQuery(queryParams) : ''
       }`,
       {
@@ -57,7 +57,7 @@ class ApiClient {
     body?: { [key: string]: string | number | boolean | undefined },
   ) {
     return fetch(
-      `${config.apiEnpoint}/${path}${
+      `${config.apiEndpoint}/${path}${
         queryParams ? this.objectToQuery(queryParams) : ''
       }`,
       {
