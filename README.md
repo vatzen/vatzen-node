@@ -1,8 +1,10 @@
 # VatZen NPM Module
 
-Your NodeJS helper in the world of VAT Compliance [https://vatzen.com](https://vatzen.com)
+NodeJS helper to connect your backend with VatZen [https://vatzen.com](https://vatzen.com). Before using the module, we highly encourage you to check out [our official documentation](https://documentation.vatzen.com/) before using this module.
 
 ## Installation
+
+Module is published in NPM register and can be installed via npm or yarn as showed below:
 
 ```
 npm install vatzen
@@ -14,13 +16,13 @@ or
 yarn add vatzen
 ```
 
-# Documentaion
+# Documentation
 
 For more extensive documentation, please visit our official docs at [https://documentation.vatzen.com](https://documentation.vatzen.com)
 
 ## General
 
-Once you obtained your API key from [VatZen Dashboard](https://dashboard.vatzen.com), you can start using the module. To get started quickly, simply import the module and pass the API Key. After initialization, you can already start calling enpoints:
+Once you obtained your API key from [VatZen Dashboard](https://dashboard.vatzen.com), you can start using the module. To get started quickly, simply import the module and pass the API Key. After initialization, you can already start calling endpoints:
 
 ```typescript
 import VatZen from 'vatzen';
@@ -37,7 +39,7 @@ vatzenClient.rates
     });
 ```
 
-VatZen NPM module is TS-first and have a complete type-coverege, which is supported out-of-the-box.
+VatZen NPM module is TS-first and have a complete type-coverage, which is supported out-of-the-box.
 
 ### General TypeScript Entities
 
@@ -94,7 +96,7 @@ export interface ErrorEntity {
 
 Before using the endpoint, you can familiarize yourself with our [Rates endpoint documentation](https://documentation.vatzen.com/api/vat-rates).
 
-All the rates function are available inside `VatZen` objec inside `rates` parameter. For example `vatzen.rates.find`.
+All the rates function are available inside `VatZen` object inside `rates` parameter. For example `vatzen.rates.find`.
 
 ### Rate TypeScript Entity
 
@@ -156,7 +158,7 @@ Returns `RateEntity`.
 
 ### Find Rate
 
-You can use VatZen to lookup country rate using different parameters, such as country name, country code or ip address. In order to do that, you can use `rates.find` function, which accepts options object with the wollowing properties:
+You can use VatZen to lookup country rate using different parameters, such as country name, country code or ip address. In order to do that, you can use `rates.find` function, which accepts options object with the following properties:
 
 | key           | type      | description                                                          |
 |---------------|-----------|----------------------------------------------------------------------|
@@ -182,7 +184,7 @@ Returns `RateEntity`.
 
 Before using the endpoint, you can familiarize yourself with our [Validations endpoint documentation](https://documentation.vatzen.com/api/validate-vat-number).
 
-All the rates function are available inside `VatZen` objec inside `validations` parameter. For example `vatzen.validations.validate`.
+All the rates function are available inside `VatZen` object inside `validations` parameter. For example `vatzen.validations.validate`.
 
 ### Validation TypeScript Entity
 
