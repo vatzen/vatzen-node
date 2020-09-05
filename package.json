@@ -1,5 +1,5 @@
 {
-  "name": "vatzen-node",
+  "name": "vatzen",
   "version": "1.0.0",
   "description": "NPM Module for VatZen API",
   "main": "dist/index.js",
@@ -17,6 +17,7 @@
   },
   "keywords": [],
   "author": "vatzen",
+  "homepage": "https://vatzen.com",
   "license": "MIT",
   "dependencies": {
     "es6-promise": "^4.2.8",
