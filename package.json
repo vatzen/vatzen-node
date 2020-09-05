@@ -1,6 +1,6 @@
 {
   "name": "vatzen-node",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0",
   "description": "NPM Module for VatZen API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
