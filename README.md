@@ -102,7 +102,7 @@ All the rates function are available inside `VatZen` object inside `rates` param
 
 ```typescript
 interface RateEntity {
-  standart_rate: number;
+  standard_rate: number;
   currency: string;
   country: CountryEntity;
   categories: {
