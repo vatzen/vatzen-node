@@ -23,3 +23,5 @@ class VatZen {
 }
 
 export default VatZen;
+
+module.exports = VatZen;
