@@ -35,7 +35,7 @@ vatzenClient.rates
       console.log(germanyVatRates);
     })
     .catch((e: ErrorEntity) => {
-      console.log('Something went wrong: ', e.errors.message);
+      console.log('Something went wrong: ', e.error.message);
     });
 ```
 
