@@ -80,12 +80,11 @@ enum ErrorTypes {
   invalid_amount = 'invalid_amount',
 }
 
-// Error returned fomr the server
+// Error returned from the server
 export interface ErrorEntity {
   statusCode: number;
   success: false;
   error: {
-    code: number;
     type: ErrorTypes;
     message: string;
   };
